@@ -6,7 +6,7 @@ import (
 
 type F map[string]interface{}
 
-func (lg Logging) conv(itf interface{}) logrus.Fields {
+func (lg Logseal) conv(itf interface{}) logrus.Fields {
 	switch val := itf.(type) {
 	case logrus.Fields:
 		return val
@@ -17,7 +17,7 @@ func (lg Logging) conv(itf interface{}) logrus.Fields {
 	}
 }
 
-func (lg Logging) toLogrusFields(fields F) logrus.Fields {
+func (lg Logseal) toLogrusFields(fields F) logrus.Fields {
 	if fields != nil {
 		return logrus.Fields(fields)
 	}

@@ -7,23 +7,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var (
-	logLevels = map[string]logrus.Level{
-		"debug": logrus.DebugLevel,
-		"info":  logrus.InfoLevel,
-		"error": logrus.ErrorLevel,
-	}
-)
-
-// Logging holds the logging module
-type Logging struct {
+type Logseal struct {
 	Logrus    *logrus.Logger
 	LogToFile bool
 }
 
-// Init method, does what it says
-// loglevel, logFile string, nocolours, JSONLog bool
-func Init(itf ...interface{}) (lg Logging) {
+func Init(itf ...interface{}) (lg Logseal) {
 	logLevel := "info"
 	if len(itf) > 0 {
 		logLevel = itf[0].(string)
@@ -93,7 +82,15 @@ func Init(itf ...interface{}) (lg Logging) {
 	return lg
 }
 
-func (lg *Logging) setLevel(level string) {
+func (lg *Logseal) setLevel(level string) {
+	logLevels := map[string]logrus.Level{
+		"trace": logrus.TraceLevel,
+		"debug": logrus.DebugLevel,
+		"info":  logrus.InfoLevel,
+		"warn":  logrus.WarnLevel,
+		"error": logrus.ErrorLevel,
+	}
+
 	if val, ok := logLevels[strings.ToLower(level)]; ok {
 		lg.Logrus.SetLevel(val)
 	} else {

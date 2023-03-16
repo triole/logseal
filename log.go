@@ -1,21 +1,21 @@
 package logseal
 
-func (lg Logging) Debug(msg string, fields interface{}) {
+func (lg Logseal) Debug(msg string, fields interface{}) {
 	lg.Logrus.WithFields(lg.conv(fields)).Debug(msg)
 }
 
-func (lg Logging) Info(msg string, fields interface{}) {
+func (lg Logseal) Info(msg string, fields interface{}) {
 	lg.Logrus.WithFields(lg.conv(fields)).Info(msg)
 }
 
-func (lg Logging) Warn(msg string, fields interface{}) {
+func (lg Logseal) Warn(msg string, fields interface{}) {
 	lg.Logrus.WithFields(lg.conv(fields)).Warn(msg)
 }
 
-func (lg Logging) Error(msg interface{}, fields interface{}) {
+func (lg Logseal) Error(msg interface{}, fields interface{}) {
 	lg.Logrus.WithFields(lg.conv(fields)).Error(msg)
 }
 
-func (lg Logging) Fatal(msg string, fields interface{}) {
+func (lg Logseal) Fatal(msg string, fields interface{}) {
 	lg.Logrus.WithFields(lg.conv(fields)).Fatal(msg)
 }
