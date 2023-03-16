@@ -1,4 +1,4 @@
-package logging
+package logseal
 
 func (lg Logging) IfErrError(msg string, fields F) {
 	for key, val := range fields {

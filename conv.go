@@ -1,4 +1,4 @@
-package logging
+package logseal
 
 import (
 	"github.com/sirupsen/logrus"

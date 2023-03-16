@@ -1,4 +1,4 @@
-package logging
+package logseal
 
 func (lg Logging) Debug(msg string, fields interface{}) {
 	lg.Logrus.WithFields(lg.conv(fields)).Debug(msg)
