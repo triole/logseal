@@ -15,6 +15,9 @@ func TestLogging(t *testing.T) {
 	lg = Init("trace", "/dev/stdout")
 	fireLogs(lg)
 
+	lg = Init("trace", nil)
+	fireLogs(lg)
+
 	lg = Init("trace", "/tmp/tempfile")
 	fireLogs(lg)
 }
