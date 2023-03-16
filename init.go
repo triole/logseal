@@ -8,29 +8,37 @@ import (
 )
 
 type Logseal struct {
-	Logrus    *logrus.Logger
-	LogToFile bool
+	Logrus *logrus.Logger
 }
 
 func Init(itf ...interface{}) (lg Logseal) {
 	logLevel := "info"
 	if len(itf) > 0 {
-		logLevel = itf[0].(string)
+		switch val := itf[0].(type) {
+		case string:
+			logLevel = val
+		}
 	}
 
-	logFile := "/dev/stdout"
+	var logFile interface{}
 	if len(itf) > 1 {
-		logFile = itf[1].(string)
+		logFile = itf[1]
 	}
 
 	noColours := false
 	if len(itf) > 2 {
-		noColours = itf[2].(bool)
+		switch val := itf[2].(type) {
+		case bool:
+			noColours = val
+		}
 	}
 
 	JSONLog := false
 	if len(itf) > 3 {
-		JSONLog = itf[3].(bool)
+		switch val := itf[3].(type) {
+		case bool:
+			JSONLog = val
+		}
 	}
 
 	timeStampFormat := "2006-01-02 15:04:05.000 MST"
@@ -62,21 +70,21 @@ func Init(itf ...interface{}) (lg Logseal) {
 		lg.Logrus.SetFormatter(form)
 	}
 
-	if logFile != "/dev/stdout" {
-		lg.LogToFile = true
-		openLogFile, err := os.OpenFile(
-			logFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644,
+	switch logf := logFile.(type) {
+	case string:
+		iowriter, err := os.OpenFile(
+			logf, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644,
 		)
 		lg.IfErrFatal(
 			"Can not open log file",
 			F{
-				"logfile": logFile,
-				"error":   err.Error(),
+				"logfile": logf,
+				"error":   err,
 			},
 		)
-
-		lg.Logrus.SetOutput(openLogFile)
+		lg.Logrus.SetOutput(iowriter)
 	}
+
 	lg.setLevel(logLevel)
 
 	return lg
