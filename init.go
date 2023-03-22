@@ -72,17 +72,19 @@ func Init(itf ...interface{}) (lg Logseal) {
 
 	switch logf := logFile.(type) {
 	case string:
-		iowriter, err := os.OpenFile(
-			logf, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644,
-		)
-		lg.IfErrFatal(
-			"Can not open log file",
-			F{
-				"logfile": logf,
-				"error":   err,
-			},
-		)
-		lg.Logrus.SetOutput(iowriter)
+		if logf != "" {
+			iowriter, err := os.OpenFile(
+				logf, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644,
+			)
+			lg.IfErrFatal(
+				"Can not open log file",
+				F{
+					"logfile": logf,
+					"error":   err,
+				},
+			)
+			lg.Logrus.SetOutput(iowriter)
+		}
 	}
 
 	lg.setLevel(logLevel)
@@ -97,6 +99,7 @@ func (lg *Logseal) setLevel(level string) {
 		"info":  logrus.InfoLevel,
 		"warn":  logrus.WarnLevel,
 		"error": logrus.ErrorLevel,
+		"fatal": logrus.FatalLevel,
 	}
 
 	if val, ok := logLevels[strings.ToLower(level)]; ok {

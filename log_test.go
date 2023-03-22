@@ -35,6 +35,8 @@ func fireLogs(lg Logseal) {
 	// note that iferr methods look up field names
 	// if there is either an 'error' or an 'err' field containing
 	// a value, the logging gets triggered
+	lg.IfErrTrace("warning because of an error", F{"error": err})
+	lg.IfErrInfo("warning because of an error", F{"error": err})
 	lg.IfErrWarn("warning because of an error", F{"error": err})
 	lg.IfErrWarn("not shown, because there is no error", F{"noerror": err})
 	lg.IfErrError("error log because of an error", F{"error": err})
