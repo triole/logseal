@@ -72,7 +72,8 @@ func Init(itf ...interface{}) (lg Logseal) {
 
 	switch logf := logFile.(type) {
 	case string:
-		if logf != "" {
+		lg.Logrus.SetOutput(os.Stdout)
+		if logf != "" && logf != "stdout" && logf != "/dev/stdout" {
 			iowriter, err := os.OpenFile(
 				logf, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644,
 			)
