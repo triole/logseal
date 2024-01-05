@@ -13,6 +13,8 @@ Four init parameters are supported.
 | no colours, bool      | bool   | false       |
 | enable JSON log, bool | bool   | false       |
 
+## Example
+
 ```go
 import (
 	"github.com/triole/logseal"
